@@ -171,12 +171,14 @@ class HttpFD(FileDownloader):
                             # the one in the hard drive.
                             self.report_file_already_downloaded(ctx.filename)
                             self.try_rename(ctx.tmpfilename, ctx.filename)
+                            print('[dc] pre http hook_progress')
                             self._hook_progress({
                                 'filename': ctx.filename,
                                 'status': 'finished',
                                 'downloaded_bytes': ctx.resume_len,
                                 'total_bytes': ctx.resume_len,
                             })
+                            print('[dc] past http hook_progress')
                             raise SucceedDownload()
                         else:
                             # The length does not match, we start the download over
@@ -299,6 +301,7 @@ class HttpFD(FileDownloader):
                 else:
                     eta = self.calc_eta(start, time.time(), ctx.data_len - ctx.resume_len, byte_counter - ctx.resume_len)
 
+                print('[dc] pre http 2 hook_progress')
                 self._hook_progress({
                     'status': 'downloading',
                     'downloaded_bytes': byte_counter,
@@ -309,6 +312,7 @@ class HttpFD(FileDownloader):
                     'speed': speed,
                     'elapsed': now - ctx.start_time,
                 })
+                print('[dc] past http 2 hook_progress')
 
                 if data_len is not None and byte_counter == data_len:
                     break
@@ -337,6 +341,7 @@ class HttpFD(FileDownloader):
             if self.params.get('updatetime', True):
                 info_dict['filetime'] = self.try_utime(ctx.filename, ctx.data.info().get('last-modified', None))
 
+            print('[dc] pre http 3 hook_progress')
             self._hook_progress({
                 'downloaded_bytes': byte_counter,
                 'total_bytes': byte_counter,
@@ -344,6 +349,7 @@ class HttpFD(FileDownloader):
                 'status': 'finished',
                 'elapsed': time.time() - ctx.start_time,
             })
+            print('[dc] past http 3 hook_progress')
 
             return True
 

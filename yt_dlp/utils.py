@@ -37,6 +37,8 @@ import traceback
 import xml.etree.ElementTree
 import zlib
 
+from functools import wraps
+
 from .compat import (
     compat_HTMLParseError,
     compat_HTMLParser,
@@ -6218,3 +6220,25 @@ def traverse_dict(dictn, keys, casesense=True):
     ''' For backward compatibility. Do not use '''
     return traverse_obj(dictn, keys, casesense=casesense,
                         is_user_input=True, traverse_string=True)
+
+
+def decorator_hook(pre=None, post=None):
+    """
+    a decorator to trigger pre and post hooks
+    """
+    print('the f')
+    def outer_wrapper(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            print('[utils] pre pre')
+            if pre:
+                args[0]._hook_progress(pre)
+            print('[utils] post pre')
+            fn = func(*args, **kwargs)
+            print('[utils] pre post')
+            if post:
+                args[0]._hook_progress(post)
+            print('[utils] post post')
+            return fn
+        return wrapper
+    return outer_wrapper

@@ -572,7 +572,10 @@ class YoutubeDL(object):
             else:
                 when = 'post_process'
             pp = pp_class(self, **compat_kwargs(pp_def))
+            print(pp)
             self.add_post_processor(pp, when=when)
+            for ph in self.params.get('progress_hooks', []):
+                pp.add_progress_hook(ph)
 
         for ph in self.params.get('post_hooks', []):
             self.add_post_hook(ph)
@@ -2279,7 +2282,7 @@ class YoutubeDL(object):
             self.to_stdout(json.dumps(info_dict, default=repr))
 
     def dl(self, name, info, subtitle=False, test=False):
-
+        
         if test:
             verbose = self.params.get('verbose')
             params = {

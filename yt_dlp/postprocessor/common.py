@@ -35,6 +35,21 @@ class PostProcessor(object):
     def __init__(self, downloader=None):
         self._downloader = downloader
         self.PP_NAME = self.pp_key()
+        self._progress_hooks = []
+        self.add_progress_hook(self.report_progress)
+
+    def report_progress(self, s):
+        # custom logic
+        print('[ppc] report_progress')
+
+    def _hook_progress(self, status):
+        print('[ppc] _hook_progress')
+        for ph in self._progress_hooks:
+            ph(status)
+
+    def add_progress_hook(self, ph):
+        print('[ppc] add_progress_hook')
+        self._progress_hooks.append(ph)
 
     @classmethod
     def pp_key(cls):

@@ -249,6 +249,7 @@ class FileDownloader(object):
         self.to_console_title('yt-dlp ' + msg)
 
     def report_progress(self, s):
+        print('[dc] report_progress')
         if s['status'] == 'finished':
             if self.params.get('noprogress', False):
                 self.to_screen('[download] Download completed')
@@ -355,6 +356,7 @@ class FileDownloader(object):
             # Check file already present
             if filename != '-' and (nooverwrites_and_exists or continuedl_and_exists):
                 self.report_file_already_downloaded(filename)
+                print('[dc] download _hook_progress')
                 self._hook_progress({
                     'filename': filename,
                     'status': 'finished',
@@ -388,12 +390,14 @@ class FileDownloader(object):
         raise NotImplementedError('This method must be implemented by subclasses')
 
     def _hook_progress(self, status):
+        print('[dc] _hook_progress')
         for ph in self._progress_hooks:
             ph(status)
 
     def add_progress_hook(self, ph):
         # See YoutubeDl.py (search for progress_hooks) for a description of
         # this interface
+        print('[dc] add_progress_hook')
         self._progress_hooks.append(ph)
 
     def _debug_cmd(self, args, exe=None):
