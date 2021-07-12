@@ -319,6 +319,20 @@ class YoutubeBaseInfoExtractor(InfoExtractor):
             },
             'INNERTUBE_CONTEXT_CLIENT_NAME': 1
         },
+        'MWEB': {
+            'INNERTUBE_API_VERSION': 'v1',
+            'INNERTUBE_CLIENT_NAME': 'MWEB',
+            'INNERTUBE_CLIENT_VERSION': '2.20210707.08.00',
+            'INNERTUBE_API_KEY': 'AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8',
+            'INNERTUBE_CONTEXT': {
+                'client': {
+                    'clientName': 'MWEB',
+                    'clientVersion': '2.20210707.08.00',
+                    'hl': 'en',
+                }
+            },
+            'INNERTUBE_CONTEXT_CLIENT_NAME': 2
+        },
         'WEB_REMIX': {
             'INNERTUBE_API_VERSION': 'v1',
             'INNERTUBE_CLIENT_NAME': 'WEB_REMIX',
